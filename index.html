@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Page 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial;
+    background: pink;
+    color: #333;
+    overflow: hidden;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.btnBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    position: relative;
+}
+
+button {
+    padding: 15px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.green { background: #ff4d6d; color: white; }
+.red { background: #444; color: white; }
+
+#msg {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: #b3003c;
+    font-weight: bold;
+    background: rgba(255,255,255,0.7);
+    padding: 10px 20px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+.heart {
+    position: fixed;
+    bottom: 0;
+    font-size: 20px;
+    animation: floatUp 4s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* 💖 Shayari */
+.shayari {
+    font-family: 'Great Vibes', cursive;
+    font-size: 34px;
+    text-align: center;
+    line-height: 1.4;
+
+    background: linear-gradient(45deg, #ff4d6d, #ff99cc, #ff0066);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow: 2px 2px 12px rgba(255, 0, 100, 0.4);
+}
+
+/* 👉 Last line */
+.note {
+    margin-top: 40px;
+    font-size: 18px;
+    color: #660033;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Do you want to talk to me? 😏</h1>
+
+<div class="btnBox">
+    <button class="green" id="yesBtn">Yes</button>
+    <button class="red" id="noBtn">No</button>
+</div>
+
+<p id="msg"></p>
+
+<audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+
+<script>
+
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 4000);
+}, 300);
+
+let noBtn = document.getElementById("noBtn");
+let yesBtn = document.getElementById("yesBtn");
+let sound = document.getElementById("clickSound");
+let msg = document.getElementById("msg");
+
+let count = 0;
+let yesSize = 18;
+let msgToggle = false;
+
+noBtn.onclick = function () {
+    sound.play();
+    count++;
+
+    yesSize += 10;
+    yesBtn.style.fontSize = yesSize + "px";
+
+    noBtn.style.position = "absolute";
+
+    let x = Math.random() * 400 - 200;
+    let y = Math.random() * 400 - 200;
+
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+    if (count >= 5) {
+        if (!msgToggle) {
+            msg.innerHTML = "Now please click Yes 💖";
+            msgToggle = true;
+        } else {
+            msg.innerHTML = "";
+            msgToggle = false;
+        }
+    }
+
+    if (count > 3) {
+        yesBtn.style.position = "absolute";
+        yesBtn.style.left = "50%";
+        yesBtn.style.top = "50%";
+        yesBtn.style.transform = "translate(-50%, -50%)";
+    }
+};
+
+yesBtn.onclick = function () {
+    sound.play();
+    secondPage();
+};
+
+function secondPage() {
+    document.body.innerHTML = `
+        <h1>💖 Do you want to know something?</h1>
+        <div class="btnBox">
+            <button class="green" id="knowYes">I want to know</button>
+            <button class="red" id="knowNo">I don't want to know</button>
+        </div>
+    `;
+
+    let knowNo = document.getElementById("knowNo");
+    let knowYes = document.getElementById("knowYes");
+
+    let count2 = 0;
+    let size2 = 18;
+
+    knowNo.onclick = function () {
+        count2++;
+
+        size2 += 10;
+        knowYes.style.fontSize = size2 + "px";
+
+        knowNo.style.position = "absolute";
+
+        let x = Math.random() * 400 - 200;
+        let y = Math.random() * 400 - 200;
+
+        knowNo.style.transform = `translate(${x}px, ${y}px)`;
+
+        if (count2 > 3) {
+            knowYes.style.position = "absolute";
+            knowYes.style.left = "50%";
+            knowYes.style.top = "50%";
+            knowYes.style.transform = "translate(-50%, -50%)";
+        }
+    };
+
+    knowYes.onclick = function () {
+        finalPage();
+    };
+}
+
+function finalPage() {
+    document.body.innerHTML = `
+        <h1>💌 For You...</h1>
+
+        <p class="shayari">
+            har manjar ma pau tumhe... <br>
+            kaisa kahu kitna chahu tumhe... <br>
+            tumse hi suru hoti hai jindagi meri <br>
+            yu kaisa hi bhul jau tumhe... 💖
+        </p>
+
+        <p class="note">
+            (  mam i... u and i will always 
+              baki ap bhot intellectual to samajh jaiyaga thik...  )
+        </p>
+    `;
+}
+
+</script>
+
+</body>
+</html>
